@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\TermsAcceptRequest;
+use Illuminate\Http\Request;
+
+class TermsController extends Controller
+{
+    public function index() {
+        return view('terms');
+    }
+
+    public function store(TermsAcceptRequest $request){
+        auth()->user()->update([
+            'terms_accepted_at' => now(),
+        ]);
+
+        return redirect()->intended(route('profile.edit', absolute: false));
+    }
+}
