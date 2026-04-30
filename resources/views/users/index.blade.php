@@ -5,118 +5,181 @@
 @section('page_desc', 'Danh sách người dùng trong hệ thống')
 
 @section('page_actions')
-    <a href="{{ url('/users/create') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-500/30 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
-        Thêm mới
-    </a>
+<a href="{{ route('users.create') }}"
+    class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-500/30 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+    Thêm mới
+</a>
 @endsection
 
 @section('content')
-    <div class="flex flex-wrap items-center justify-between gap-3">
-        <div class="relative w-full max-w-sm">
-            <div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
-                <svg class="h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.06 4.31l2.82 2.82a.75.75 0 1 1-1.06 1.06l-2.82-2.82A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
-                </svg>
-            </div>
-            <input type="text" placeholder="Tìm theo tên/email..." class="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm shadow-sm outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-600/20">
-        </div>
 
-        <div class="flex items-center gap-2">
-            <button type="button" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
-                Xóa đã chọn
-            </button>
-        </div>
-    </div>
+<div class="flex flex-wrap items-center justify-end gap-2">
+    @if($withDeleted)
+    <a href="{{ route('users.index') }}"
+        class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+        Hiển thị danh sách người dùng
+    </a>
+    @else
+    <a href="{{ route('users.index', ['deleted' => 'true']) }}"
+        class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+        Hiển thị người dùng đã bị xóa
+    </a>
+    @endif
+</div>
 
-    <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200">
-        <table class="min-w-full divide-y divide-slate-200">
+<style>
+    .no-scrollbar {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+
+@if(session('status'))
+<div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-md">
+    {{ session('status') }}
+</div>
+@endif
+<div class="mt-4 rounded-2xl border border-slate-200">
+    <div class="overflow-x-auto no-scrollbar scroll-smooth">
+        <table class="min-w-max w-full divide-y divide-slate-200">
             <thead class="bg-slate-50">
                 <tr>
-                    <th class="w-12 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600">
-                    </th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Tên</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Email</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Vai trò</th>
-                    <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">Hành động</th>
+                    <th
+                        class="sticky left-0 z-20 min-w-[220px] whitespace-nowrap border-r border-slate-200 bg-slate-50 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Tên</th>
+                    <th
+                        class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Email</th>
+                    <th
+                        class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Vai trò</th>
+                    <th
+                        class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Địa chỉ</th>
+                    <th
+                        class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Điện thoại</th>
+                    <th
+                        class="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Điều khoản</th>
+                    <th
+                        class="whitespace-nowrap px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Hành động</th>
                 </tr>
             </thead>
 
             <tbody class="divide-y divide-slate-200 bg-white">
-                <tr class="hover:bg-slate-50">
-                    <td class="px-4 py-3">
-                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600">
+                @foreach($users as $user)
+                <tr class="group hover:bg-slate-50">
+                    <td
+                        class="sticky left-0 z-10 min-w-[220px] whitespace-nowrap border-r border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 group-hover:bg-slate-50">
+                        {{ $user->name}}
                     </td>
-                    <td class="px-4 py-3 text-sm font-semibold text-slate-900">Nguyễn Văn A</td>
-                    <td class="px-4 py-3 text-sm text-slate-600">a@example.com</td>
-                    <td class="px-4 py-3">
-                        <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Admin</span>
+                    <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ $user->email}}</td>
+                    <td class="whitespace-nowrap px-4 py-3">
+                        <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">{{ $user->roles->pluck('name')->implode(', ') }}</span>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ $user->address}}</td>
+                    <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ $user->phone_number}}</td>
+                    <td class="whitespace-nowrap px-4 py-3">
+                        <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold {{ $user->terms_accepted_at ? 'text-emerald-700' : 'text-red-700'}}">{{ $user->terms_accepted_at ? 'Đã chấp nhận' : 'Chưa chấp nhận'}}</span>
+                    </td>
+                    @if($withDeleted)
+                    <td class="whitespace-nowrap px-4 py-3">
                         <div class="flex justify-end gap-2">
-                            <a href="{{ url('/users/1/edit') }}" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+                            <form action="{{ route('users.restore', $user) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit"
+                                    class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+                                     Khôi phục
+                                </button>
+                            </form>
+
+                            <form action="{{ route('users.forceDelete', $user) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button onclick="return confirm('Bạn có chắc muốn xóa người dùng?')" type="submit"
+                                    class="rounded-xl border border-red-200 bg-white px-3 py-2 text-sm font-semibold text-red-700 shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/20">
+                                    Xóa vĩnh viễn
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                    @else
+                    <td class="whitespace-nowrap px-4 py-3">
+                        <div class="flex justify-end gap-2">
+                            <a href="{{ route('users.edit', $user) }}"
+                                class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
                                 Sửa
                             </a>
 
-                            <form action="{{ url('/users/1') }}" method="POST">
+                            <form action="{{ route('users.destroy', $user) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="rounded-xl border border-red-200 bg-white px-3 py-2 text-sm font-semibold text-red-700 shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/20">
+                                <button onclick="return confirm('Bạn có chắc muốn xóa người dùng?')" type="submit"
+                                    class="rounded-xl border border-red-200 bg-white px-3 py-2 text-sm font-semibold text-red-700 shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/20">
                                     Xóa
                                 </button>
                             </form>
                         </div>
                     </td>
+                    @endif
                 </tr>
-
-                <tr class="hover:bg-slate-50">
-                    <td class="px-4 py-3">
-                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600">
-                    </td>
-                    <td class="px-4 py-3 text-sm font-semibold text-slate-900">Trần Thị B</td>
-                    <td class="px-4 py-3 text-sm text-slate-600">b@example.com</td>
-                    <td class="px-4 py-3">
-                        <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">User</span>
-                    </td>
-                    <td class="px-4 py-3">
-                        <div class="flex justify-end gap-2">
-                            <a href="{{ url('/users/2/edit') }}" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
-                                Sửa
-                            </a>
-
-                            <form action="{{ url('/users/2') }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="rounded-xl border border-red-200 bg-white px-3 py-2 text-sm font-semibold text-red-700 shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/20">
-                                    Xóa
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
+</div>
 
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <div class="text-sm text-slate-600">Hiển thị 1–10 / 120</div>
+<div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+    @if($users->total() > 0)
+    <div class="text-sm text-slate-600">Hiển thị {{ $users->firstItem() }}-{{ $users->lastItem() }} / {{ $users->total() }}</div>
+    @else
+    <div class="text-sm text-slate-600">Không có dữ liệu</div>
+    @endif
 
-        <nav class="inline-flex items-center gap-1">
-            <button type="button" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
-                Trước
-            </button>
-            <button type="button" class="rounded-xl bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-500/30 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
-                1
-            </button>
-            <button type="button" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
-                2
-            </button>
-            <button type="button" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
-                3
-            </button>
-            <button type="button" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
-                Sau
-            </button>
-        </nav>
-    </div>
+    <nav class="inline-flex items-center gap-1">
+        @if(!$users->onFirstPage())
+        <a href="{{ $users->url(1) }}"
+            class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+            Đầu
+        </a>
+        @endif
+
+        @if($users->currentPage() > 1)
+        <a href="{{ $users->url($users->currentPage() - 1) }}"
+            class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">...</a>
+        @endif
+
+        @php
+        $start = max(1, $users->currentPage() - 1);
+        $end = min($users->lastPage(), $users->currentPage() + 1);
+        @endphp
+
+        <!-- <a href="#" class="rounded-xl bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-500/30 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">1</a> -->
+        @for($i = $start; $i <= $end; $i++)
+            <a href="{{ $users->url($i) }}"
+            class="{{ $users->currentPage() == $i ? "bg-indigo-600 text-white" : ""}} rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20">{{ $i }}</a>
+            @endfor
+            <!-- <a href="#"
+            class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">3</a> -->
+
+            @if($users->currentPage() < $users->lastPage())
+                <a href="{{ $users->url($users->currentPage() + 1) }}"
+                    class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">...</a>
+                @endif
+
+                @if(!$users->onLastPage())
+                <a href="{{ $users->url($users->lastPage()) }}"
+                    class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+                    Cuối
+                </a>
+                @endif
+    </nav>
+</div>
 @endsection

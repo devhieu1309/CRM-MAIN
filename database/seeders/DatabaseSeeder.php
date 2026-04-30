@@ -39,5 +39,6 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->assignRole('user');
     
+        $this->call(UserSeeder::class); 
     }
 }
