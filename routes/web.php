@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\UserController;
@@ -31,4 +32,6 @@ Route::group(['middleware' => 'role:admin'], function() {
     Route::patch('/users/{user}/restore', [UserController::class, 'restore'])->withTrashed()->name('users.restore');
     Route::delete('/users/{user}/force-delete', [UserController::class, 'forceDelete'])->withTrashed()->name('users.forceDelete');
 });
+
+Route::resource('clients', ClientController::class);
 require __DIR__ . '/auth.php';

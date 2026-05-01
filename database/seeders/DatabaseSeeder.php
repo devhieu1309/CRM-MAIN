@@ -39,6 +39,9 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->assignRole('user');
     
-        $this->call(UserSeeder::class); 
+        $this->call([
+            UserSeeder::class,
+            ClientSeeder::class
+        ]); 
     }
 }
