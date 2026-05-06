@@ -19,4 +19,12 @@ class Client extends Model
         'postal_code',
         'tax_code'
     ];
+
+    public function projects() {
+        return $this->hasMany(Project::class);
+    }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,4 +36,6 @@ Route::group(['middleware' => 'role:admin'], function() {
 });
 
 Route::resource('clients', ClientController::class);
+Route::resource('projects', ProjectController::class);
+Route::resource('tasks', TaskController::class);
 require __DIR__ . '/auth.php';

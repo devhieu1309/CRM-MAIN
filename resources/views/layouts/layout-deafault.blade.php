@@ -76,6 +76,25 @@
                                 </span>
                                 <span class="flex-1">Quản lý khách hàng</span>
                             </a>
+
+                            <a href="{{ url('/projects') }}" class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900">
+                                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100">
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M6 3.25A2.75 2.75 0 0 1 8.75.5h2.5A2.75 2.75 0 0 1 14 3.25V4h1.25A2.75 2.75 0 0 1 18 6.75v9.5A2.75 2.75 0 0 1 15.25 19H4.75A2.75 2.75 0 0 1 2 16.25v-9.5A2.75 2.75 0 0 1 4.75 4H6v-.75ZM7.5 4h5v-.75c0-.69-.56-1.25-1.25-1.25h-2.5C8.06 2 7.5 2.56 7.5 3.25V4Z" clip-rule="evenodd" />
+                                        <path d="M4.5 8.25c0-.414.336-.75.75-.75h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1-.75-.75ZM4.5 11c0-.414.336-.75.75-.75h6.5a.75.75 0 0 1 0 1.5h-6.5A.75.75 0 0 1 4.5 11ZM4.5 13.75c0-.414.336-.75.75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1-.75-.75Z" />
+                                    </svg>
+                                </span>
+                                <span class="flex-1">Quản lý dự án</span>
+                            </a>
+
+                            <a href="{{ url('/tasks') }}" class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900">
+                                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100">
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M4.75 2A2.75 2.75 0 0 0 2 4.75v10.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25V4.75A2.75 2.75 0 0 0 15.25 2H4.75ZM6.5 6.75c0-.414.336-.75.75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75Zm0 3.25c0-.414.336-.75.75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75Zm0 3.25c0-.414.336-.75.75-.75h3.5a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <span class="flex-1">Quản lý task</span>
+                            </a>
                         </nav>
                     </div>
                 </aside>
