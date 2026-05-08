@@ -74,7 +74,7 @@
                         <tr class="group hover:bg-slate-50">
                             <td
                                 class="sticky left-0 z-10 min-w-[220px] whitespace-nowrap border-r border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 group-hover:bg-slate-50">
-                                {{ $task->title }}
+                                <a class="hover:underline" href="{{ route('tasks.show', $task) }}">{{ $task->title }}</a>
                             </td>
                             <td class="min-w-[320px] px-4 py-3 text-sm text-slate-600">
                                 {{  $task->description }}
@@ -84,7 +84,8 @@
                             <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ $task->project->title }}</td>
                             <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ $task->user->name }}</td>
                             <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">
-                                {{ $task->deadline->format('d-m-Y') }}</td>
+                                {{ $task->deadline->format('d-m-Y') }}
+                            </td>
                             <td class="whitespace-nowrap px-4 py-3">
                                 <span
                                     class="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
@@ -117,7 +118,8 @@
     <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
         @if($tasks->total() > 0)
             <div class="text-sm text-slate-600">Hiển thị {{ $tasks->firstItem() }}-{{ $tasks->lastItem() }} /
-                {{ $tasks->total() }}</div>
+                {{ $tasks->total() }}
+            </div>
         @else
             <div class="text-sm text-slate-600">Không có dữ liệu</div>
         @endif
@@ -146,7 +148,7 @@
                     class="{{ $tasks->currentPage() == $i ? "bg-indigo-600 text-white" : ""}} rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20">{{ $i }}</a>
             @endfor
             <!-- <a href="#"
-                class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">3</a> -->
+                        class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">3</a> -->
 
             @if($tasks->currentPage() < $tasks->lastPage())
                 <a href="{{ $tasks->url($tasks->currentPage() + 1) }}"

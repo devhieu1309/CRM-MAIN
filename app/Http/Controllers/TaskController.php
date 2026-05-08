@@ -53,9 +53,12 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Task $task)
     {
-        //
+        $task->load('project', 'client', 'user');
+        return view("tasks.show", [
+            'task' => $task
+        ]);
     }
 
     /**

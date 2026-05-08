@@ -15,15 +15,15 @@
     <div class="p-6">
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Dự án triển khai CRM nội bộ</h1>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $project->title }}</h1>
                 <p class="text-gray-600 dark:text-gray-400 mt-1">Chi tiết dự án</p>
             </div>
             <div class="flex space-x-3">
-                <a href="#"
+                <a href="{{ route('projects.edit', $project) }}"
                     class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
                     Sửa dự án
                 </a>
-                <a href="#"
+                <a href="{{ route('projects.index') }}"
                     class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
                     Quay lại danh sách dự án
                 </a>
@@ -55,7 +55,7 @@
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Mô tả</p>
                                 <p class="text-gray-900 dark:text-gray-100">
-                                    Dự án xây dựng hệ thống CRM giúp quản lý khách hàng, công việc và tiến độ xử lý của đội ngũ kinh doanh.
+                                    {{ $project->description }}
                                 </p>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Hạn chót</p>
-                                <p class="text-gray-900 dark:text-gray-100">30/06/2026</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->deadline->format('d/m/Y') }}</p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -80,8 +80,7 @@
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Trạng thái</p>
                                 <span
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Đang
-                                    thực hiện</span>
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">{{ $project->status->label() }}</span>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -92,7 +91,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Ngày tạo</p>
-                                <p class="text-gray-900 dark:text-gray-100">05/05/2026</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->created_at->format('d/m/Y') }}</p>
                             </div>
                         </div>
                     </div>
@@ -120,7 +119,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Họ tên</p>
-                                <p class="text-gray-900 dark:text-gray-100">Nguyễn Văn An</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->user->name }}</p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -132,7 +131,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Email</p>
-                                <p class="text-gray-900 dark:text-gray-100">an.nguyen@congtyabc.vn</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->user->email }}</p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -144,7 +143,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Số điện thoại</p>
-                                <p class="text-gray-900 dark:text-gray-100">0909 123 456</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->user->phone_number }}</p>
                             </div>
                         </div>
                     </div>
@@ -174,7 +173,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Công ty</p>
-                                <p class="text-gray-900 dark:text-gray-100">Công ty TNHH ABC Solutions</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->client->company_name }}</p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -185,7 +184,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Người liên hệ</p>
-                                <p class="text-gray-900 dark:text-gray-100">Trần Thị Bích</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->client->customer_name }}</p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -197,7 +196,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Email</p>
-                                <p class="text-gray-900 dark:text-gray-100">bich.tran@abcsolutions.vn</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->client->customer_email }}</p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -209,7 +208,7 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Số điện thoại</p>
-                                <p class="text-gray-900 dark:text-gray-100">0912 888 999</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->client->customer_phone }}</p>
                             </div>
                         </div>
                     </div>
@@ -239,40 +238,23 @@
                             </svg>
                             <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Tổng số công việc</p>
-                                <p class="text-gray-900 dark:text-gray-100">4 công việc</p>
+                                <p class="text-gray-900 dark:text-gray-100">{{ $project->tasks->count() }} công việc</p>
                             </div>
                         </div>
                         <div class="space-y-3">
                             <div class="border-t border-gray-200 dark:border-gray-600 pt-3">
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Danh sách công việc</p>
                                 <div class="space-y-2">
-                                    <a href="#"
+                                    @foreach($project->tasks as $task)
+                                    <a href="{{ route('tasks.show', $task) }}"
                                         class="block p-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
                                         <div class="flex items-center justify-between">
-                                            <span class="text-sm text-gray-900 dark:text-gray-100">Phân tích quy trình hiện tại - Nguyễn Văn An</span>
+                                            <span class="text-sm text-gray-900 dark:text-gray-100">{{ $task->title }} - {{ $task->user->name }}</span>
                                             <span
-                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Đang
-                                                xử lý</span>
+                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">{{ $task->status->label() }}</span>
                                         </div>
                                     </a>
-                                    <a href="#"
-                                        class="block p-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-sm text-gray-900 dark:text-gray-100">Thiết kế giao diện quản lý khách hàng - Lê Minh Quân</span>
-                                            <span
-                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Mới
-                                                tạo</span>
-                                        </div>
-                                    </a>
-                                    <a href="#"
-                                        class="block p-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-sm text-gray-900 dark:text-gray-100">Xây dựng API quản lý nhiệm vụ - Trần Hoàng Nam</span>
-                                            <span
-                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Hoàn
-                                                thành</span>
-                                        </div>
-                                    </a>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -306,8 +288,7 @@
                             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
                     <div class="text-gray-900 dark:text-gray-100">
-                        <p>Tầng 8, Tòa nhà ABC Tower, 123 Nguyễn Văn Linh</p>
-                        <p>Phường Tân Thuận, TP. Hồ Chí Minh, 700000</p>
+                        <p>{{ $project->client->address }}</p>
                     </div>
                 </div>
             </div>
@@ -353,84 +334,33 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600">
+                            @foreach($project->tasks as $task)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        Phân tích yêu cầu vận hành
+                                        {{ $task->title }}
                                     </div>
                                     <div class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">
-                                        Thu thập và chuẩn hóa yêu cầu từ bộ phận kinh doanh.
+                                        {{ $task->description }}.
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-gray-100">Nguyễn Văn An</div>
+                                    <div class="text-sm text-gray-900 dark:text-gray-100">{{ $task->user->name }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Đang
-                                        thực hiện</span>
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">{{ $task->status->label() }}</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                    15/05/2026
+                                    {{ $task->deadline->format('d/m/Y') }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="#" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
-                                        Xem
+                                    <a href="{{ route('tasks.show', $task) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        Chi tiết
                                     </a>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        Thiết kế giao diện danh sách khách hàng
-                                    </div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">
-                                        Hoàn thiện wireframe và prototype cho module khách hàng.
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-gray-100">Lê Minh Quân</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Chờ
-                                        xử lý</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                    22/05/2026
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="#" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
-                                        Xem
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        Xây dựng API quản lý nhiệm vụ
-                                    </div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">
-                                        Hoàn tất endpoint tạo, cập nhật và phân công công việc.
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-gray-100">Trần Hoàng Nam</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Hoàn
-                                        thành</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                    01/05/2026
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="#" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
-                                        Xem
-                                    </a>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
