@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\ProjectStatus;
 use App\Enums\TaskStatus;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,5 +42,11 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
+    #[Scope]
+    protected function filerStatus(Builder $query, ?TaskStatus $status = null){
+        return $query->when($status, function($query, $status) {
+            return $query->where('status', $status);
+        });
+    }
     
 }

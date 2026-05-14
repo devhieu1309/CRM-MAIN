@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\ProjectStatus;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,4 +39,18 @@ class Project extends Model
     public function tasks() {
         return $this->hasMany(Task::class);
     }
+
+    // #[Scope]
+    // protected function filerStatus(Builder $query, ?TaskStatus $status = null){
+    //     return $query->when($status, function($query, $status) {
+    //         return $query->where('status', $status);
+    //     });
+    // }
+
+   #[Scope] 
+   protected function filterStatus(Builder $query, ?ProjectStatus $status = null){
+        return $query->when($status, function($query, $status){
+            return $query->where('status', $status);
+        });
+   }
 }

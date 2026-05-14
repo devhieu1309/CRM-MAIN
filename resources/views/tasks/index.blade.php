@@ -30,6 +30,36 @@
     @endif
 
     <div class="mt-4 rounded-2xl border border-slate-200">
+        <div class="border-b border-slate-200 bg-slate-50/70 px-4 py-3">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                    <p class="text-sm font-semibold text-slate-700">Bộ lọc công việc</p>
+                    <p class="text-xs text-slate-500">Lọc nhanh theo trạng thái (giao diện tĩnh)</p>
+                </div>
+                <form action="{{ route('tasks.index') }}" method="GET">
+                    <div class="flex flex-col gap-2 sm:flex-row sm:items-end">
+                        <div>
+                            <label for="task-status-filter"
+                                class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Trạng thái
+                            </label>
+                            <select id="task-status-filter" name="status"
+                                class="w-full min-w-[220px] rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+                                <option value="all">Tất cả trạng thái</option>
+                                @foreach($statuses as $status)
+                                    <option {{ request('status') === $status->value ? 'selected' : '' }} value="{{ $status }}">
+                                        {{ $status->label() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit"
+                            class="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-500/30 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+                            Lọc
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="overflow-x-auto no-scrollbar scroll-smooth">
             <table class="min-w-max w-full divide-y divide-slate-200">
                 <thead class="bg-slate-50">
@@ -70,7 +100,7 @@
                 </thead>
 
                 <tbody class="divide-y divide-slate-200 bg-white">
-                    @foreach($tasks as $task)
+                    @forelse($tasks as $task)
                         <tr class="group hover:bg-slate-50">
                             <td
                                 class="sticky left-0 z-10 min-w-[220px] whitespace-nowrap border-r border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 group-hover:bg-slate-50">
@@ -98,6 +128,8 @@
                                         class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
                                         Sửa
                                     </a>
+
+                                    @can('delete')
                                     <form action="{{ route('tasks.destroy', $task) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -106,10 +138,32 @@
                                             Xóa
                                         </button>
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="7" class="px-4 py-10">
+                            <div class="flex flex-col items-center justify-center text-center bg-gray-50 rounded-2xl border border-dashed border-gray-300 py-12">
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14 text-gray-400 mb-4"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M9 13h6m-6 4h6M9 5h6m2 0a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h10z" />
+                                </svg>
+            
+                                <h2 class="text-lg font-semibold text-gray-700">
+                                    Không có project nào
+                                </h2>
+            
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Hiện tại chưa có dữ liệu để hiển thị.
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -148,7 +202,7 @@
                     class="{{ $tasks->currentPage() == $i ? "bg-indigo-600 text-white" : ""}} rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20">{{ $i }}</a>
             @endfor
             <!-- <a href="#"
-                        class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">3</a> -->
+                                class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">3</a> -->
 
             @if($tasks->currentPage() < $tasks->lastPage())
                 <a href="{{ $tasks->url($tasks->currentPage() + 1) }}"

@@ -94,6 +94,7 @@
                                 Sửa
                             </a>
 
+                            @can('delete')
                             <form action="{{ route('clients.destroy', $client) }}" method="POST" class="inline-block">
                                 @method('DELETE')
                                 @csrf
@@ -101,6 +102,7 @@
                                 Xóa
                             </button>
                             </form>
+                            @endcan
                         </div>
                     </td>
                 </tr>

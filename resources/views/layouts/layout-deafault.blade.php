@@ -56,19 +56,66 @@
                     <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
                         <div class="px-2 pb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">Menu</div>
 
+                        @php
+                            $navDashboard = request()->routeIs('dashboard');
+                            $navClients = request()->routeIs('clients.*');
+                            $navProjects = request()->routeIs('projects.*');
+                            $navTasks = request()->routeIs('tasks.*');
+                            $navUsers = request()->routeIs('users.*');
+                        @endphp
+
                         <nav class="space-y-1">
-                            <a href="{{ url('/users') }}" class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900">
-                                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100">
+                            <a href="{{ route('dashboard') }}"
+                                @class([
+                                    'group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold',
+                                    'bg-indigo-50 text-indigo-900 ring-1 ring-indigo-100' => $navDashboard,
+                                    'text-slate-700 hover:bg-slate-50 hover:text-slate-900' => ! $navDashboard,
+                                ])>
+                                <span @class([
+                                    'inline-flex h-9 w-9 items-center justify-center rounded-xl',
+                                    'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' => $navDashboard,
+                                    'bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100' => ! $navDashboard,
+                                ])>
                                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
-                                        <path fill-rule="evenodd" d="M.458 16.668A8.5 8.5 0 0 1 10 11.5c3.57 0 6.635 2.2 7.958 5.168A1 1 0 0 1 17.04 18H1.376a1 1 0 0 1-.918-1.332Z" clip-rule="evenodd" />
+                                        <path d="M10.75 2.5a.75.75 0 0 0-1.5 0v1.58a6.25 6.25 0 0 0-5.42 5.42H2.25a.75.75 0 0 0 0 1.5h1.58a6.25 6.25 0 0 0 5.42 5.42v1.58a.75.75 0 0 0 1.5 0v-1.58a6.25 6.25 0 0 0 5.42-5.42h1.58a.75.75 0 0 0 0-1.5h-1.58a6.25 6.25 0 0 0-5.42-5.42V2.5Z" />
+                                        <path d="M10 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z" />
                                     </svg>
                                 </span>
-                                <span class="flex-1">Quản lý người dùng</span>
+                                <span class="flex-1">Dashboard</span>
                             </a>
 
-                            <a href="{{ route('clients.index') }}" class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900">
-                                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100">
+                            @role('admin')
+                                <a href="{{ route('users.index') }}"
+                                    @class([
+                                        'group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold',
+                                        'bg-indigo-50 text-indigo-900 ring-1 ring-indigo-100' => $navUsers,
+                                        'text-slate-700 hover:bg-slate-50 hover:text-slate-900' => ! $navUsers,
+                                    ])>
+                                    <span @class([
+                                        'inline-flex h-9 w-9 items-center justify-center rounded-xl',
+                                        'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' => $navUsers,
+                                        'bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100' => ! $navUsers,
+                                    ])>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+                                            <path fill-rule="evenodd" d="M.458 16.668A8.5 8.5 0 0 1 10 11.5c3.57 0 6.635 2.2 7.958 5.168A1 1 0 0 1 17.04 18H1.376a1 1 0 0 1-.918-1.332Z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span class="flex-1">Quản lý người dùng</span>
+                                </a>
+                            @endrole
+
+                            <a href="{{ route('clients.index') }}"
+                                @class([
+                                    'group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold',
+                                    'bg-indigo-50 text-indigo-900 ring-1 ring-indigo-100' => $navClients,
+                                    'text-slate-700 hover:bg-slate-50 hover:text-slate-900' => ! $navClients,
+                                ])>
+                                <span @class([
+                                    'inline-flex h-9 w-9 items-center justify-center rounded-xl',
+                                    'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' => $navClients,
+                                    'bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100' => ! $navClients,
+                                ])>
                                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M2 6.75A2.75 2.75 0 0 1 4.75 4h10.5A2.75 2.75 0 0 1 18 6.75v9.5A2.75 2.75 0 0 1 15.25 19H4.75A2.75 2.75 0 0 1 2 16.25v-9.5ZM4.75 5.5c-.69 0-1.25.56-1.25 1.25v9.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-9.5c0-.69-.56-1.25-1.25-1.25H4.75Z" clip-rule="evenodd" />
                                         <path d="M6.5 8.25c0-.414.336-.75.75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75ZM6.5 11c0-.414.336-.75.75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5A.75.75 0 0 1 6.5 11ZM6.5 13.75c0-.414.336-.75.75-.75h3.25a.75.75 0 0 1 0 1.5H7.25a.75.75 0 0 1-.75-.75Z" />
@@ -77,8 +124,17 @@
                                 <span class="flex-1">Quản lý khách hàng</span>
                             </a>
 
-                            <a href="{{ url('/projects') }}" class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900">
-                                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100">
+                            <a href="{{ route('projects.index') }}"
+                                @class([
+                                    'group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold',
+                                    'bg-indigo-50 text-indigo-900 ring-1 ring-indigo-100' => $navProjects,
+                                    'text-slate-700 hover:bg-slate-50 hover:text-slate-900' => ! $navProjects,
+                                ])>
+                                <span @class([
+                                    'inline-flex h-9 w-9 items-center justify-center rounded-xl',
+                                    'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' => $navProjects,
+                                    'bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100' => ! $navProjects,
+                                ])>
                                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M6 3.25A2.75 2.75 0 0 1 8.75.5h2.5A2.75 2.75 0 0 1 14 3.25V4h1.25A2.75 2.75 0 0 1 18 6.75v9.5A2.75 2.75 0 0 1 15.25 19H4.75A2.75 2.75 0 0 1 2 16.25v-9.5A2.75 2.75 0 0 1 4.75 4H6v-.75ZM7.5 4h5v-.75c0-.69-.56-1.25-1.25-1.25h-2.5C8.06 2 7.5 2.56 7.5 3.25V4Z" clip-rule="evenodd" />
                                         <path d="M4.5 8.25c0-.414.336-.75.75-.75h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1-.75-.75ZM4.5 11c0-.414.336-.75.75-.75h6.5a.75.75 0 0 1 0 1.5h-6.5A.75.75 0 0 1 4.5 11ZM4.5 13.75c0-.414.336-.75.75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1-.75-.75Z" />
@@ -87,8 +143,17 @@
                                 <span class="flex-1">Quản lý dự án</span>
                             </a>
 
-                            <a href="{{ url('/tasks') }}" class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900">
-                                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100">
+                            <a href="{{ route('tasks.index') }}"
+                                @class([
+                                    'group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold',
+                                    'bg-indigo-50 text-indigo-900 ring-1 ring-indigo-100' => $navTasks,
+                                    'text-slate-700 hover:bg-slate-50 hover:text-slate-900' => ! $navTasks,
+                                ])>
+                                <span @class([
+                                    'inline-flex h-9 w-9 items-center justify-center rounded-xl',
+                                    'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' => $navTasks,
+                                    'bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100' => ! $navTasks,
+                                ])>
                                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M4.75 2A2.75 2.75 0 0 0 2 4.75v10.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25V4.75A2.75 2.75 0 0 0 15.25 2H4.75ZM6.5 6.75c0-.414.336-.75.75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75Zm0 3.25c0-.414.336-.75.75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75Zm0 3.25c0-.414.336-.75.75-.75h3.5a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
                                     </svg>

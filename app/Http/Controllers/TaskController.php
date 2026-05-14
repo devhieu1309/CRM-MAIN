@@ -18,8 +18,13 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::with('project', 'client', 'user')->paginate(7);
+        $statuses = TaskStatus::cases();
+        $status = request('status')
+        ? TaskStatus::tryFrom(request('status'))
+        : null;
+        $tasks = Task::with('project', 'client', 'user')->filerStatus($status)->paginate(7);
         return view('tasks.index', [
+            'statuses' => $statuses,
             'tasks' => $tasks
         ]);
     }

@@ -298,14 +298,36 @@
             <div
                 class="bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 overflow-hidden">
                 <div class="px-6 py-4 bg-gray-50 dark:bg-gray-600 border-b border-gray-200 dark:border-gray-500">
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                            </path>
-                        </svg>
-                        Công việc của dự án
-                    </h3>
+                    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                                </path>
+                            </svg>
+                            Công việc của dự án
+                        </h3>
+                        <div class="flex items-end gap-3">
+                            <div>
+                                <label for="task-status-filter"
+                                    class="block text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider mb-1">
+                                    Lọc theo trạng thái
+                                </label>
+                                <select id="task-status-filter" name="task_status_filter"
+                                    class="min-w-[220px] px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="all">Tất cả trạng thái</option>
+                                    <option value="pending">Chờ xử lý</option>
+                                    <option value="in_progress">Đang thực hiện</option>
+                                    <option value="completed">Hoàn thành</option>
+                                    <option value="on_hold">Tạm dừng</option>
+                                </select>
+                            </div>
+                            <button type="button"
+                                class="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                Lọc
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">

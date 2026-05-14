@@ -17,9 +17,12 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('client', 'user')->paginate(7);
+        $status = request('status') ? ProjectStatus::tryFrom(request('status')) : null;
+        $statuses = ProjectStatus::cases();
+        $projects = Project::with('client', 'user')->filterStatus($status)->paginate(7);
         return view('projects.index', [
-            'projects' => $projects
+            'projects' => $projects,
+            'statuses' => $statuses
         ]);
     }
 
