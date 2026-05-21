@@ -92,6 +92,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        abort_unless(auth()->user()?->can('delete'), 403);
+
         $project->delete();
         return redirect()->route('projects.index')->with('status', 'Dự án đã được xóa thành công.');
     }
