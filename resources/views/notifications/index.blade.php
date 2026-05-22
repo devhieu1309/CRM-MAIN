@@ -43,7 +43,11 @@
                     @forelse($notifications as $notification)
                     <tr class="hover:bg-slate-50">
                         <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-900">
-                            {{ $notification->data['project_title'] }}
+                            @if($notification->data['type'] == 'Dự án')
+                                <a href="{{ route('projects.show', $notification->data['project_id']) }}">{{ $notification->data['project_title'] }}</a>
+                            @else
+                                <a href="{{ route('tasks.show', $notification->data['task_id']) }}">{{ $notification->data['task_title'] }}</a>
+                            @endif
                         </td>
                         <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">
                             {{ $notification->data['type'] }}

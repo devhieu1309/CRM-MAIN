@@ -16,6 +16,6 @@ class TermsController extends Controller
             'terms_accepted_at' => now(),
         ]);
 
-        return redirect()->intended(route('profile.edit', absolute: false));
+        return redirect()->intended(route('dashboard'));
     }
 }

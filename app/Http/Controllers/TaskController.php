@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Enums\TaskStatus;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Mail\MailTaskAssigned;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use App\Notifications\TaskAssigned;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -55,6 +57,7 @@ class TaskController extends Controller
         $task = Task::create($request->validated());
         $user = User::find($request->user_id);
         $user->notify(new TaskAssigned($task));
+        Mail::to($user)->send(new MailTaskAssigned($task));
         return redirect()->route('tasks.index')->with('status', 'Tạo công việc mới thành công.');
     }
 
@@ -97,6 +100,7 @@ class TaskController extends Controller
         if($oldUserId !== $request->user_id) {
             $user = User::find($request->user_id);
             $user->notify(new TaskAssigned($task));
+            Mail::to($user)->send(new MailTaskAssigned($task));
         }
         return redirect()->route('tasks.index')->with('status', 'Cập nhật công việc thành công.');
     }
