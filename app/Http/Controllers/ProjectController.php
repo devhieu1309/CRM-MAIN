@@ -9,6 +9,7 @@ use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\User;
+use App\Notifications\ProjectAssigned;
 
 class ProjectController extends Controller
 {
@@ -46,7 +47,12 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        Project::create($request->validated());
+        $project = Project::create($request->validated());
+
+        $user = User::find($request->user_id);
+
+        $user->notify(new ProjectAssigned($project));
+
         return redirect()->route('projects.index')->with('status', 'Dự án đã được tạo thành công.');
     }
 
@@ -83,7 +89,15 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+
+       $oldUserId = $project->user_id;
        $project->update($request->validated());
+
+       if($request->user_id !== $oldUserId) {
+        $user = User::find($request->user_id);
+        $user->notify(new ProjectAssigned($project));
+      }
+
        return redirect()->route('projects.index')->with('status', 'Dự án đã được cập nhật thành công.');
     }
 

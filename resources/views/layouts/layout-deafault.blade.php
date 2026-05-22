@@ -36,6 +36,27 @@
                     </div>
 
                     <div class="flex items-center gap-3">
+                        <a
+                            href="{{ route('notifications.index') }}"
+                            class="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                            aria-label="Thông báo"
+                        >
+                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M9.383 2.25a6.75 6.75 0 0 1 6.745 6.52v.77a4.5 4.5 0 0 0 1.06 2.94l.47.47a.75.75 0 0 1-.53 1.28h-14.12a.75.75 0 0 1-.53-1.28l.47-.47a4.5 4.5 0 0 0 1.06-2.94v-.77A6.75 6.75 0 0 1 9.383 2.25ZM10 18a2.25 2.25 0 0 0 2.163-1.6H7.837A2.25 2.25 0 0 0 10 18Z" clip-rule="evenodd" />
+                            </svg>
+
+                            @php
+                                $unread = auth()->user()->unreadNotifications()->count();
+                            @endphp
+
+                            @if($unread > 0)
+                            <span
+                                class="absolute -right-1 -top-1 inline-flex min-h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-bold leading-none text-white ring-2 ring-white"
+                                aria-label="{{ $unread }} thông báo chưa đọc"
+                            >{{ $unread > 9 ? '9+' : $unread }}</span>
+                            @endif
+                        </a>
+
                         <div class="hidden text-right sm:block">
                             <div class="text-sm font-medium text-slate-900">{{ auth()->user()->name ?? 'Người dùng' }}</div>
                             <div class="text-xs text-slate-500">{{ auth()->user()->email ?? '' }}</div>

@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\TaskAssigned;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -51,7 +52,9 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        Task::create($request->validated());
+        $task = Task::create($request->validated());
+        $user = User::find($request->user_id);
+        $user->notify(new TaskAssigned($task));
         return redirect()->route('tasks.index')->with('status', 'Tạo công việc mới thành công.');
     }
 
@@ -89,7 +92,12 @@ class TaskController extends Controller
      */
     public function update(UpdateProjectRequest $request, Task $task)
     {
+        $oldUserId = $task->user_id;
         $task->update($request->validated());
+        if($oldUserId !== $request->user_id) {
+            $user = User::find($request->user_id);
+            $user->notify(new TaskAssigned($task));
+        }
         return redirect()->route('tasks.index')->with('status', 'Cập nhật công việc thành công.');
     }
 
