@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Project extends Model
+class Project extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'title',
@@ -26,6 +28,10 @@ class Project extends Model
             'status' => ProjectStatus::class,
             'deadline' => 'datetime'
         ];
+    }
+
+    public function registerMediaCollections() : void {
+        $this->addMediaCollection('attachments')->useDisk('local');
     }
 
     public function client() {

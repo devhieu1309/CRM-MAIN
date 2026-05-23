@@ -428,32 +428,21 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach($project->media as $media)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                tai-lieu-yeu-cau-crm.pdf
+                                {{ $media->file_name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                2.4 MB
+                                {{ number_format($media->size / 1024 / 1024, 2) }} MB
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="#" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
+                                <a href="{{ route('media.download', $media) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
                                     Tải xuống
                                 </a>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                mockup-giao-dien-khach-hang.fig
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                11.7 MB
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="#" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
-                                    Tải xuống
-                                </a>
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

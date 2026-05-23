@@ -329,34 +329,22 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                @foreach($task->media as $media)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                        mockup-man-hinh-khach-hang.fig
+                                        {{ $media->file_name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                        8.6 MB
+                                        {{ number_format($media->size / 1024 / 1024, 2) }} MB
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#"
+                                        <a href="{{ route('media.download', $media) }}"
                                             class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
                                             Tải xuống
                                         </a>
                                     </td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                        yeu-cau-giao-dien-chi-tiet-khach-hang.docx
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                        1.2 MB
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#"
-                                            class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
-                                            Tải xuống
-                                        </a>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

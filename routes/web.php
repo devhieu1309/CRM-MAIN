@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -26,9 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::put('/notifications/{notification}', [NotificationController::class, 'update'])->name('notifications.update');
     Route::delete('/notifications', [NotificationController::class, 'destroy'])->name('notifications.destroy');
-    // Route::view('/users', 'users.index')->name('users.index');
-    // Route::view('/users/create', 'users.create')->name('users.create');
-    // Route::view('/users/{user}/edit', 'users.edit')->name('users.edit');
+   
+    Route::group(['prefix' => 'media', 'as' => 'media.'], function() {
+        Route::post('{model}/{id}/upload', [MediaController::class, 'store'])->name('upload');
+        Route::get('{media}/download', [MediaController::class, 'download'])->name('download');
+        Route::delete('{model}/{id}/{media}', [MediaController::class, 'destroy'])->name('delete');
+    });
 });
 
 Route::get('/terms', [TermsController::class, 'index'])->name('terms.index');
