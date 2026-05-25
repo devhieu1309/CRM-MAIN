@@ -1,64 +1,173 @@
-<<<<<<< HEAD
-# CRM-MAIN
-Dự án backend Laravel 12 cho CRM, có xác thực API bằng Sanctum, phân quyền vai trò/quyền (Spatie Permission) và quản lý upload/lưu trữ tệp đa phương tiện (Spatie Media Library)
-=======
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CRM Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Hệ thống CRM nội bộ được xây dựng bằng Laravel 12, hỗ trợ quản lý khách hàng, dự án, công việc và người dùng trong cùng một nền tảng. Trọng tâm phần tôi thực hiện trong dự án là backend, thiết kế dữ liệu và các luồng nghiệp vụ như phân quyền, giao việc, thông báo và quản lý tệp đính kèm.
 
-## About Laravel
+## Mục tiêu dự án
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Xây dựng một ứng dụng CRM dạng web để quản lý dữ liệu khách hàng, dự án và công việc.
+- Áp dụng mô hình phân quyền theo vai trò để tách biệt quyền của quản trị viên và người dùng thường.
+- Tối ưu luồng làm việc khi giao dự án và giao task bằng notification và email.
+- Rèn luyện kỹ năng phát triển backend web application với Laravel, Eloquent ORM và xử lý business flow thực tế.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Phần tôi tập trung thực hiện
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Phân tích bài toán CRM và thiết kế luồng nghiệp vụ chính.
+- Thiết kế cơ sở dữ liệu và xây dựng quan hệ giữa `User`, `Client`, `Project`, `Task`.
+- Phát triển các module CRUD cho người dùng, khách hàng, dự án và công việc.
+- Xây dựng xử lý backend cho phân quyền, notification, email và upload file đính kèm.
+- Viết một số feature test cho các rule quan trọng của hệ thống.
 
-## Learning Laravel
+## Tính năng nổi bật
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- Đăng ký, đăng nhập, quên mật khẩu, xác thực email.
+- Phân quyền theo vai trò với `admin` và `user`.
+- Quản lý người dùng:
+  - tạo mới, cập nhật, xóa mềm, khôi phục, xóa vĩnh viễn
+  - gán vai trò cho người dùng
+- Quản lý khách hàng với đầy đủ thông tin liên hệ và công ty.
+- Quản lý dự án:
+  - tạo dự án
+  - gán người phụ trách
+  - cập nhật trạng thái
+  - xem chi tiết dự án và danh sách task liên quan
+- Quản lý công việc:
+  - tạo task theo dự án và khách hàng
+  - gán người xử lý
+  - cập nhật trạng thái và deadline
+  - xem chi tiết task, người phụ trách, khách hàng, dự án liên quan
+- Notification khi giao dự án hoặc giao task.
+- Gửi email khi giao task.
+- Upload, tải xuống và xóa tệp đính kèm cho dự án và công việc.
+- Bắt buộc người dùng chấp nhận điều khoản trước khi tiếp tục sử dụng hệ thống.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Business Flow
 
-## Laravel Sponsors
+1. Quản trị viên tạo tài khoản và phân vai trò cho người dùng.
+2. Hệ thống lưu thông tin khách hàng và doanh nghiệp.
+3. Từ khách hàng, người dùng tạo dự án và gán người phụ trách.
+4. Trong mỗi dự án, người dùng tạo các task cụ thể và giao cho thành viên phù hợp.
+5. Khi một task được giao, hệ thống tạo notification và gửi email cho người nhận.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Công nghệ sử dụng
 
-### Premium Partners
+### Backend
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- PHP 8.2
+- Laravel 12
+- Laravel Sanctum
+- Laravel Breeze
+- Eloquent ORM
+- Laravel Notifications
+- Laravel Mail
 
-## Contributing
+### Frontend
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Blade Template Engine
+- Tailwind CSS
+- Alpine.js
+- Vite
 
-## Code of Conduct
+### Packages chính
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- `spatie/laravel-permission` - phân quyền vai trò và quyền
+- `spatie/laravel-medialibrary` - quản lý file đính kèm
 
-## Security Vulnerabilities
+### Testing
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Pest
 
-## License
+## Cấu trúc dữ liệu chính
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
->>>>>>> ad0b949 (Khởi tạo dự án CRM.)
+- `User`: thông tin tài khoản, vai trò, điều khoản sử dụng, địa chỉ, số điện thoại.
+- `Client`: khách hàng và doanh nghiệp.
+- `Project`: dự án gắn với khách hàng và người phụ trách.
+- `Task`: công việc thuộc dự án, có người nhận xử lý, deadline và trạng thái.
+- `Notification`: thông báo khi được giao dự án hoặc công việc.
+- `Media`: tệp đính kèm cho project và task.
+
+## Cài đặt và chạy dự án
+
+### 1. Clone source code
+
+```bash
+git clone <your-repository-url>
+cd CRM-MAIN
+```
+
+### 2. Cài dependency
+
+```bash
+composer install
+npm install
+```
+
+### 3. Tạo file môi trường
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 4. Cấu hình database trong `.env`
+
+Cập nhật các biến:
+
+- `DB_CONNECTION`
+- `DB_HOST`
+- `DB_PORT`
+- `DB_DATABASE`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+
+### 5. Chạy migration và seed dữ liệu
+
+```bash
+php artisan migrate --seed
+```
+
+### 6. Chạy ứng dụng
+
+```bash
+composer dev
+```
+
+Sau khi chạy, ứng dụng sẽ khởi động:
+
+- Laravel server
+- Queue listener
+- Vite development server
+
+## Tài khoản demo
+
+Sau khi seed dữ liệu, có thể dùng:
+
+- Admin:
+  - Email: `admin@gmail.com`
+  - Password: `password`
+- User:
+  - Email: `user@gmail.com`
+  - Password: `password`
+
+## Kiểm thử
+
+Chạy test bằng lệnh:
+
+```bash
+php artisan test
+```
+
+Các nhóm test hiện có bao gồm:
+
+- xác thực người dùng
+- truy cập dashboard
+- quyền truy cập trang user
+- điều khoản sử dụng
+- quyền xóa dự án
+
+## Hướng phát triển tiếp theo
+
+- Hoàn thiện REST API cho mobile app hoặc frontend tách riêng.
+- Bổ sung filter nâng cao, tìm kiếm và phân trang tối ưu hơn.
+- Thêm biểu đồ thống kê trực quan cho dashboard.
+- Tích hợp activity log để theo dõi lịch sử thao tác.
+- Viết thêm test cho các luồng tạo và giao task, upload file và notification.
